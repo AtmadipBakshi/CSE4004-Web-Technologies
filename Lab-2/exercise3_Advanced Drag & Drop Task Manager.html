@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 3 - Task Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        input, button { padding: 8px; margin: 5px; }
+        .board { display: flex; justify-content: space-around; margin-top: 20px; }
+        .column { width: 30%; background: #f0f0f0; padding: 10px; min-height: 300px; border-radius: 5px; }
+        .column h3 { margin-top: 0; }
+        .task { padding: 10px; background: #fff; margin: 5px 0; border-radius: 5px; cursor: grab; }
+        .completed { background: lightgreen; }
+    </style>
+</head>
+<body>
+    <h1>Drag & Drop Task Manager</h1>
+    <input type="text" id="taskName" placeholder="Enter task name">
+    <button onclick="addTask()">Add Task</button>
+
+    <div class="board">
+        <div class="column" id="todo">
+            <h3>To Do</h3>
+        </div>
+        <div class="column" id="inprogress">
+            <h3>In Progress</h3>
+        </div>
+        <div class="column" id="completed">
+            <h3>Completed</h3>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            const name = document.getElementById('taskName').value.trim();
+            if(!name) return alert("Enter task name");
+
+            const task = document.createElement('div');
+            task.className = 'task';
+            const date = new Date().toLocaleDateString();
+            task.textContent = `${name} (${date})`;
+            task.draggable = true;
+            task.addEventListener('dragstart', dragStart);
+
+            document.getElementById('todo').appendChild(task);
+            document.getElementById('taskName').value = '';
+        }
+
+        let dragged;
+
+        function dragStart(e) { dragged = e.target; }
+
+        const columns = document.querySelectorAll('.column');
+        columns.forEach(col => {
+            col.addEventListener('dragover', e => e.preventDefault());
+            col.addEventListener('drop', e => {
+                e.preventDefault();
+                if(dragged) {
+                    col.appendChild(dragged);
+                    if(col.id === 'completed') {
+                        dragged.classList.add('completed');
+                        alert('Task Completed Successfully');
+                    } else {
+                        dragged.classList.remove('completed');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

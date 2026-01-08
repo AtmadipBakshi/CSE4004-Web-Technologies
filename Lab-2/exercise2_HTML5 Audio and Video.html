@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2 - Audio & Video</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        audio, video { margin: 20px 0; display: block; }
+    </style>
+</head>
+<body>
+    <h1>Audio Player</h1>
+    <audio id="audioPlayer" controls>
+        <source src="sample-audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <p>Current Time: <span id="audioTime">0:00</span></p>
+
+    <h1>Video Player</h1>
+    <video id="videoPlayer" width="480" height="270" controls>
+        <source src="sample-video.mp4" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
+    <p>Current Time: <span id="videoTime">0:00</span></p>
+
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const audioTime = document.getElementById('audioTime');
+
+        audio.addEventListener('timeupdate', () => {
+            let minutes = Math.floor(audio.currentTime / 60);
+            let seconds = Math.floor(audio.currentTime % 60);
+            if(seconds < 10) seconds = '0' + seconds;
+            audioTime.textContent = `${minutes}:${seconds}`;
+        });
+
+        const video = document.getElementById('videoPlayer');
+        const videoTime = document.getElementById('videoTime');
+
+        video.addEventListener('timeupdate', () => {
+            let minutes = Math.floor(video.currentTime / 60);
+            let seconds = Math.floor(video.currentTime % 60);
+            if(seconds < 10) seconds = '0' + seconds;
+            videoTime.textContent = `${minutes}:${seconds}`;
+        });
+    </script>
+</body>
+</html>

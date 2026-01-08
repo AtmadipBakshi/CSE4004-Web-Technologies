@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Canvas Exercise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        canvas {
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML5 Canvas Exercise</h1>
+    <canvas id="myCanvas" width="500" height="300"></canvas>
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Filled rectangle
+        ctx.fillStyle = 'skyblue';
+        ctx.fillRect(50, 50, 150, 100); // x, y, width, height
+
+        // Filled circle
+        ctx.beginPath();
+        ctx.arc(350, 100, 50, 0, Math.PI * 2); // x, y, radius, startAngle, endAngle
+        ctx.fillStyle = 'orange';
+        ctx.fill();
+        ctx.closePath();
+
+        // Straight line
+        ctx.beginPath();
+        ctx.moveTo(50, 200); // start point
+        ctx.lineTo(450, 250); // end point
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.closePath();
+
+        // Text
+        ctx.font = '24px Arial';
+        ctx.fillStyle = 'red';
+        ctx.fillText('HTML5 Canvas', 150, 280);
+    </script>
+</body>
+</html>
