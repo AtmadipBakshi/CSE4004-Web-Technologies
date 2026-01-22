@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Survey Builder</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 500px;
+            margin: auto;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .question {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Survey Form</h2>
+
+<form id="surveyForm"></form>
+
+<button onclick="validateSurvey()">Submit Survey</button>
+
+<script>
+let questions = [
+    {
+        text: "Enter your name",
+        type: "text",
+        required: true,
+        limit: 20
+    },
+    {
+        text: "Select your gender",
+        type: "radio",
+        options: ["Male", "Female"],
+        required: true
+    },
+    {
+        text: "Select your skills",
+        type: "checkbox",
+        options: ["Java", "JavaScript", "Python"],
+        min: 1
+    }
+];
+
+let form = document.getElementById("surveyForm");
+
+// Generate questions dynamically
+questions.forEach((q, index) => {
+    let div = document.createElement("div");
+    div.className = "question";
+
+    let label = document.createElement("p");
+    label.innerText = q.text;
+    div.appendChild(label);
+
+    if (q.type === "text") {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.id = "q" + index;
+        div.appendChild(input);
+    }
+
+    if (q.type === "radio") {
+        q.options.forEach(opt => {
+            div.innerHTML += `
+                <input type="radio" name="q${index}" value="${opt}">
+                ${opt}
+            `;
+        });
+    }
+
+    if (q.type === "checkbox") {
+        q.options.forEach(opt => {
+            div.innerHTML += `
+                <input type="checkbox" name="q${index}" value="${opt}">
+                ${opt}
+            `;
+        });
+    }
+
+    let error = document.createElement("div");
+    error.id = "err" + index;
+    error.className = "error";
+    div.appendChild(error);
+
+    form.appendChild(div);
+});
+
+// Validation function
+function validateSurvey() {
+
+    let valid = true;
+
+    questions.forEach((q, index) => {
+
+        let error = document.getElementById("err" + index);
+        error.innerText = "";
+
+        if (q.type === "text") {
+            let value = document.getElementById("q" + index).value;
+
+            if (q.required && value === "") {
+                error.innerText = "This field is required";
+                valid = false;
+            }
+            else if (value.length > q.limit) {
+                error.innerText = "Maximum " + q.limit + " characters allowed";
+                valid = false;
+            }
+        }
+
+        if (q.type === "radio") {
+            let selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (q.required && !selected) {
+                error.innerText = "Please select one option";
+                valid = false;
+            }
+        }
+
+        if (q.type === "checkbox") {
+            let checked = document.querySelectorAll(`input[name="q${index}"]:checked`);
+            if (checked.length < q.min) {
+                error.innerText = "Select at least one option";
+                valid = false;
+            }
+        }
+    });
+
+    if (valid) {
+        alert("Survey submitted successfully!");
+    }
+}
+</script>
+
+</body>
+</html>

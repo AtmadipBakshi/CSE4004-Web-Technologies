@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adaptive Registration System</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 400px;
+            margin: auto;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+        }
+
+        .error {
+            border: 2px solid red;
+        }
+
+        .msg {
+            color: red;
+            font-size: 14px;
+        }
+
+        #skillsDiv {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="regForm">
+
+    <input type="text" id="name" placeholder="Name">
+
+    <input type="email" id="email" placeholder="Email">
+    <div id="emailMsg" class="msg"></div>
+
+    <input type="password" id="password" placeholder="Password">
+    <div id="passMsg" class="msg"></div>
+
+    <input type="password" id="confirm" placeholder="Confirm Password">
+
+    <input type="number" id="age" placeholder="Age">
+
+    <select id="role" onchange="roleChange()">
+        <option value="">Select Role</option>
+        <option>Student</option>
+        <option>Teacher</option>
+        <option>Admin</option>
+    </select>
+
+    <div id="skillsDiv">
+        <input type="text" id="skills" placeholder="Skills (Students only)">
+    </div>
+
+    <button type="submit">Register</button>
+
+</form>
+
+<script>
+function roleChange() {
+    let role = document.getElementById("role").value;
+
+    if (role === "Student") {
+        document.getElementById("skillsDiv").style.display = "block";
+    } else {
+        document.getElementById("skillsDiv").style.display = "none";
+    }
+}
+
+// Email domain validation
+document.getElementById("email").addEventListener("blur", function () {
+    let email = this.value;
+    let msg = document.getElementById("emailMsg");
+
+    if (!email.endsWith("@gmail.com")) {
+        msg.innerText = "Only Gmail addresses allowed";
+        this.classList.add("error");
+    } else {
+        msg.innerText = "";
+        this.classList.remove("error");
+    }
+});
+
+// Password strength validation
+document.getElementById("password").addEventListener("input", function () {
+    let role = document.getElementById("role").value;
+    let pass = this.value;
+    let msg = document.getElementById("passMsg");
+
+    if (role === "Admin" && pass.length < 8) {
+        msg.innerText = "Admin password must be at least 8 characters";
+        this.classList.add("error");
+    } else {
+        msg.innerText = "";
+        this.classList.remove("error");
+    }
+});
+
+// Final submission
+document.getElementById("regForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Registration successful after validation!");
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intelligent Shopping Cart</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 500px;
+            margin: auto;
+        }
+
+        button {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Shopping Cart</h2>
+
+<button onclick="addItem()">Add Product</button>
+<button onclick="applyCoupon()">Apply Coupon</button>
+
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody id="cartBody"></tbody>
+</table>
+
+<h3 id="finalTotal"></h3>
+
+<script>
+let cart = [];
+
+function addItem() {
+    cart.push({
+        name: "Notebook",
+        price: 100,
+        quantity: 1,
+        category: "Stationery"
+    });
+
+    updateCart();
+}
+
+function updateCart() {
+    let body = document.getElementById("cartBody");
+    body.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        let cost = item.price * item.quantity;
+        total += cost;
+
+        body.innerHTML += `
+            <tr>
+                <td>${item.name}</td>
+                <td>₹${item.price}</td>
+                <td>
+                    <input type="number" value="${item.quantity}" min="1"
+                    onchange="updateQty(${index}, this.value)">
+                </td>
+                <td>₹${cost}</td>
+            </tr>
+        `;
+    });
+
+    // Bulk discount
+    if (total >= 500) {
+        total = total * 0.9;
+    }
+
+    document.getElementById("finalTotal").innerText =
+        "Final Amount: ₹" + total;
+}
+
+function updateQty(index, qty) {
+    cart[index].quantity = Number(qty);
+    updateCart();
+}
+
+function applyCoupon() {
+    let code = prompt("Enter coupon code");
+
+    if (code && code.toUpperCase() === "SAVE10") {
+        alert("Coupon Applied: 10% OFF");
+    } else {
+        alert("Invalid Coupon");
+    }
+}
+</script>
+
+</body>
+</html>
