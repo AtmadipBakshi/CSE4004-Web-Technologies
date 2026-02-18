@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management</title>
+</head>
+<body>
+
+<h2>Student Management</h2>
+
+<form id="studentForm">
+    ID: <input type="text" id="id" required>
+    Name: <input type="text" id="name" required>
+    Dept: <input type="text" id="dept" required>
+    Marks: <input type="number" id="marks" required>
+    <button type="submit">Add</button>
+</form>
+
+<h3>Students</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th><th>Name</th><th>Dept</th><th>Marks</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+let students = [];
+
+const form = document.getElementById("studentForm");
+const tableBody = document.getElementById("tableBody");
+
+function render() {
+    tableBody.innerHTML = "";
+    students.forEach((s, index) => {
+        tableBody.innerHTML += `
+            <tr>
+                <td>${s.id}</td>
+                <td>${s.name}</td>
+                <td>${s.dept}</td>
+                <td>${s.marks}</td>
+                <td>
+                    <button onclick="editStudent(${index})">Edit</button>
+                    <button onclick="deleteStudent(${index})">Delete</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const student = {
+        id: id.value,
+        name: name.value,
+        dept: dept.value,
+        marks: marks.value
+    };
+
+    students.push(student);
+    render();
+    form.reset();
+});
+
+function deleteStudent(index) {
+    students.splice(index, 1);
+    render();
+}
+
+function editStudent(index) {
+    const s = students[index];
+    id.value = s.id;
+    name.value = s.name;
+    dept.value = s.dept;
+    marks.value = s.marks;
+
+    students.splice(index, 1);
+    render();
+}
+</script>
+
+</body>
+</html>
