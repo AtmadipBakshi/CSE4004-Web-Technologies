@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Record System</title>
+    <style>
+        table { border-collapse: collapse; width: 85%; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+
+<h2>Student Record System</h2>
+
+<input type="number" id="studentId" placeholder="ID">
+<input type="text" id="studentName" placeholder="Name">
+<input type="text" id="studentCourse" placeholder="Course">
+<input type="number" id="studentMarks" placeholder="Marks">
+
+<button onclick="addStudent()">Add</button>
+<button onclick="updateStudent()">Update</button>
+<button onclick="deleteStudent()">Delete</button>
+
+<p id="message"></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Marks</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+
+</body>
+</html>

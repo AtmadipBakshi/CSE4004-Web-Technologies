@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management System</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 8px; text-align: center; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+
+<h2>Employee Management System</h2>
+
+<input type="text" id="empId" placeholder="Employee ID">
+<input type="text" id="empName" placeholder="Name">
+<input type="text" id="empDept" placeholder="Department">
+<input type="text" id="empSalary" placeholder="Salary">
+
+<button onclick="addEmployee()">Add</button>
+<button onclick="updateEmployee()">Update</button>
+<button onclick="deleteEmployee()">Delete</button>
+
+<p id="message"></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody id="employeeTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+
+</body>
+</html>

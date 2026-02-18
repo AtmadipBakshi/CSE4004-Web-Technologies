@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book>
+        <id>101</id>
+        <title>JavaScript Basics</title>
+        <author>John Carter</author>
+        <availability>Available</availability>
+    </book>
+    <book>
+        <id>102</id>
+        <title>XML Fundamentals</title>
+        <author>Sarah Lee</author>
+        <availability>Not Available</availability>
+    </book>
+</library>
